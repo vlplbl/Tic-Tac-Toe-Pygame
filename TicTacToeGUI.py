@@ -1,5 +1,6 @@
 import pygame as pg
 import random
+import sys
 
 SIZE = 3
 
@@ -16,12 +17,11 @@ YELLOW = (255, 255, 0)
 DARKGREEN = (0, 128, 0)
 TITLE = 'Tic Tac Toe'
 FPS = 30
-
+pg.init()
 
 class Game:
     def __init__(self, size):
         self.size = size
-        pg.init()
         self.font_name = pg.font.match_font('arial')
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption(TITLE)
@@ -43,10 +43,12 @@ class Game:
         # Game loop - events
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                self.quit()
+                pg.quit()
+                sys.exit()
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
-                    self.quit() 
+                    pg.quit()
+                    sys.exit() 
             if event.type == pg.MOUSEBUTTONUP:
                 if event.button == pg.BUTTON_LEFT:
                     self.clicked = True
@@ -253,10 +255,12 @@ class Game:
             self.clock.tick(FPS)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
-                    self.quit()
+                    pg.quit()
+                    sys.exit()
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
-                        self.start_run = False 
+                        pg.quit()
+                        sys.exit()
             self.screen.fill(WHITE)
 
             # draw btexct box to choose a symbol
@@ -283,7 +287,8 @@ class Game:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     waiting = False
-                    self.quit()
+                    pg.quit()
+                    sys.exit()
                 if event.type == pg.KEYUP or event.type == pg.MOUSEBUTTONUP:
                     pg.time.wait(200)
                     waiting = False
@@ -295,4 +300,3 @@ if __name__ == "__main__":
         g.run()
         g.show_go_screen()
 
-pg.quit
